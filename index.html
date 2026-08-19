@@ -6,11 +6,11 @@
 <meta name="theme-color" content="#FAF6EC">
 <title>The Keyring · Week 5 Mission Edition</title>
 <style>
-*{box-sizing:border-box}html,body{height:100%;margin:0}body{display:grid;place-items:center;background:radial-gradient(circle at 15% 15%,rgba(42,157,143,.12),transparent 30%),radial-gradient(circle at 85% 12%,rgba(231,111,81,.12),transparent 30%),#FAF6EC;color:#2B2620;font-family:system-ui,-apple-system,Segoe UI,sans-serif}.loader{width:min(560px,86vw);text-align:center;padding:28px}.key{width:90px;height:90px;margin:0 auto 24px;position:relative;animation:float 2.4s ease-in-out infinite}.key:before{content:"";position:absolute;width:42px;height:42px;border:7px solid #E76F51;border-radius:50%;left:0;top:20px}.key:after{content:"";position:absolute;width:58px;height:9px;background:#1D3557;left:41px;top:38px;box-shadow:29px 10px 0 -1px #1D3557,43px 18px 0 -1px #1D3557}.title{font:700 clamp(1.35rem,4vw,2.1rem) Georgia,serif;color:#1D3557}.sub{color:#6B6355;line-height:1.55;margin:12px auto 0;max-width:480px}.bar{height:7px;border-radius:99px;background:#EDE5D2;overflow:hidden;margin-top:24px}.bar:after{content:"";display:block;width:42%;height:100%;background:linear-gradient(90deg,#2A9D8F,#E76F51,#C9932F);animation:load 1.15s ease-in-out infinite}.tiny{margin-top:12px;font:600 .72rem ui-monospace,monospace;color:#2A9D8F}.error{display:none;margin-top:16px;padding:12px;border:1px solid #C0392B;border-radius:10px;color:#C0392B;background:rgba(192,57,43,.05);font-size:.85rem}@keyframes float{50%{transform:translateY(-8px) rotate(2deg)}}@keyframes load{from{transform:translateX(-110%)}to{transform:translateX(250%)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{display:grid;place-items:center;background:radial-gradient(circle at 15% 15%,rgba(42,157,143,.12),transparent 30%),radial-gradient(circle at 85% 12%,rgba(231,111,81,.12),transparent 30%),#FAF6EC;color:#2B2620;font-family:system-ui,-apple-system,Segoe UI,sans-serif}.loader{width:min(760px,90vw);text-align:center;padding:28px}.key{width:90px;height:90px;margin:0 auto 24px;position:relative;animation:float 2.4s ease-in-out infinite}.key:before{content:"";position:absolute;width:42px;height:42px;border:7px solid #E76F51;border-radius:50%;left:0;top:20px}.key:after{content:"";position:absolute;width:58px;height:9px;background:#1D3557;left:41px;top:38px;box-shadow:29px 10px 0 -1px #1D3557,43px 18px 0 -1px #1D3557}.title{font:700 clamp(1.35rem,4vw,2.1rem) Georgia,serif;color:#1D3557}.sub{color:#6B6355;line-height:1.55;margin:12px auto 0;max-width:650px}.bar{height:7px;border-radius:99px;background:#EDE5D2;overflow:hidden;margin-top:24px}.bar:after{content:"";display:block;width:42%;height:100%;background:linear-gradient(90deg,#2A9D8F,#E76F51,#C9932F);animation:load 1.15s ease-in-out infinite}.tiny{margin-top:12px;font:600 .72rem ui-monospace,monospace;color:#2A9D8F}.error{display:none;margin-top:16px;padding:12px;border:1px solid #C0392B;border-radius:10px;color:#C0392B;background:rgba(192,57,43,.05);font-size:.85rem}@keyframes float{50%{transform:translateY(-8px) rotate(2deg)}}@keyframes load{from{transform:translateX(-110%)}to{transform:translateX(250%)}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
-<div class="loader"><div class="key"></div><div class="title">THE KEYRING · MISSION EDITION</div><p class="sub">Loading interactive key lifecycle labs, distribution decisions, KDC exchange, MITM defence, certificate trust checks and revocation missions…</p><div class="bar"></div><div class="tiny">COMP6013 · WEEK 5</div><div class="error" id="error"></div></div>
+<div class="loader"><div class="key"></div><div class="title">THE KEYRING · MISSION EDITION</div><p class="sub">Loading the full-width interactive key lifecycle lab, distribution decisions, KDC exchange, MITM defence, certificate trust checks and revocation missions…</p><div class="bar"></div><div class="tiny">COMP6013 · WEEK 5</div><div class="error" id="error"></div></div>
 <script>
 (async()=>{
   try{
@@ -25,8 +25,39 @@
     const bin=atob(encoded), bytes=new Uint8Array(bin.length);
     for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
     const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
-    const html=await new Response(stream).text();
+    let html=await new Response(stream).text();
     if(!html.includes('Mission Edition') || !html.includes('missionDistribution') || !html.includes('missionMitm')) throw new Error('Enhanced website payload failed validation.');
+
+    const fullWidthCSS=`
+<style id="full-page-layout-fix">
+html,body{width:100%;max-width:none!important;overflow-x:hidden}
+body{display:block!important}
+main{width:100%!important;max-width:none!important;margin:0!important}
+.page{width:min(1500px,calc(100% - 48px))!important;max-width:none!important;margin:0 auto!important;padding-left:0!important;padding-right:0!important}
+.cover{width:100%!important;max-width:none!important;min-height:92vh!important;padding:clamp(72px,9vw,130px) clamp(24px,7vw,110px)!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;background:radial-gradient(circle at 14% 18%,rgba(42,157,143,.12),transparent 29%),radial-gradient(circle at 84% 22%,rgba(231,111,81,.12),transparent 31%)}
+.cover .sub{max-width:900px!important;font-size:clamp(1.05rem,1.5vw,1.28rem)!important}
+.chapter{width:100%!important;max-width:none!important;padding:clamp(62px,7vw,104px) clamp(24px,6vw,96px)!important}
+.chapter-inner{width:100%!important;max-width:1380px!important;margin:0 auto!important}
+.chapter-head{max-width:1120px!important}
+.chapter-head h2{font-size:clamp(1.8rem,3.2vw,2.8rem)!important}
+.lede{max-width:1100px!important;font-size:clamp(1.3rem,1.9vw,1.65rem)!important}
+.body-text{max-width:1180px!important;font-size:clamp(1rem,1.15vw,1.08rem)!important}
+.explore{width:100%!important;max-width:none!important;padding:clamp(24px,3.5vw,46px)!important;margin-top:38px!important;box-shadow:0 12px 34px rgba(29,53,87,.08)!important}
+.explore h4{font-size:clamp(1.2rem,1.8vw,1.55rem)!important}
+.method-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.cert-card{max-width:980px!important}
+.pki-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+.summary-list{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px 34px!important}
+.summary-item{padding:20px!important;background:rgba(255,255,255,.45)!important;border:1px solid var(--line-soft)!important;border-radius:12px!important}
+.flow-stage,.mitm-stage{width:100%!important;max-width:980px!important;margin-left:auto!important;margin-right:auto!important}
+.wheel-wrap{justify-content:flex-start!important;gap:64px!important}
+.wheel-detail{max-width:620px!important}
+#dotnav{right:30px!important}
+footer{width:100%!important;padding-left:6vw!important;padding-right:6vw!important}
+@media(max-width:1100px){.method-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.pki-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}.summary-list{grid-template-columns:1fr!important}}
+@media(max-width:720px){.page{width:calc(100% - 28px)!important}.chapter{padding:56px 18px!important}.cover{min-height:84vh!important;padding:68px 22px!important}.method-grid,.pki-grid{grid-template-columns:1fr!important}.explore{padding:22px 16px!important}.wheel-wrap{gap:24px!important;justify-content:center!important}.pyr-tier.master,.pyr-tier.inter,.pyr-tier.ephem{width:min(100%,460px)!important}.flow-stage,.mitm-stage{overflow-x:auto!important}}
+</style>`;
+    html=html.replace('</head>',fullWidthCSS+'\n</head>');
     document.open();document.write(html);document.close();
     requestAnimationFrame(()=>window.scrollTo(0,0));
   }catch(err){const b=document.getElementById('error');b.textContent=err?.message||'Unable to load the interactive site.';b.style.display='block';}
