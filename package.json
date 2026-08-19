@@ -1,0 +1,11 @@
+{
+  "name": "nd-w5c",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "latest"
+  }
+}
